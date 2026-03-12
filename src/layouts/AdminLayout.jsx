@@ -9,7 +9,11 @@ export default function AdminLayout() {
 
   const location = useLocation();
 
-  const title = location.pathname.startsWith(`/admin/drivers-management`)
+  const title = location.pathname.includes(`/admin/user-management/`)
+    ? "User Details"
+    : location.pathname.startsWith(`/admin/user-management`)
+    ? "User Management"
+    : location.pathname.startsWith(`/admin/drivers-management`)
     ? "Drivers Management"
     : location.pathname.startsWith(`/admin/customers-management`)
     ? "Customers Management"
@@ -21,7 +25,11 @@ export default function AdminLayout() {
     ? "Settings"
     : "Dashboard Overview";
 
-  const subtitle = location.pathname.startsWith(`/admin/drivers-management`)
+  const subtitle = location.pathname.includes(`/admin/user-management/`)
+    ? "View comprehensive user profile and activity"
+    : location.pathname.startsWith(`/admin/user-management`)
+    ? "Manage all registered drivers and passengers"
+    : location.pathname.startsWith(`/admin/drivers-management`)
     ? "Manage all ice cream truck drivers"
     : location.pathname.startsWith(`/admin/customers-management`)
     ? "View and manage all registered customers"
