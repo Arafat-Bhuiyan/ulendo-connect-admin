@@ -136,7 +136,7 @@ const NotificationPanel = ({ onClose }) => {
           <div className="p-4 border-t border-black/10 shrink-0">
             <button 
               onClick={handleViewMore}
-              className="w-full h-10 bg-white border border-black/10 rounded-lg text-neutral-950 text-sm font-normal roboto-serif hover:bg-gray-50 transition-all font-medium"
+              className="w-full h-10 bg-white border border-black/10 rounded-lg text-neutral-950 text-sm roboto-serif hover:bg-gray-50 transition-all font-medium"
             >
               View All Activity
             </button>

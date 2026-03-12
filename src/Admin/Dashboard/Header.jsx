@@ -17,17 +17,30 @@ const Header = ({ title, subtitle }) => {
   return (
     <div className="flex items-center justify-between px-6 py-7 bg-[#FBFBFB]">
       <div>
-        <div className="justify-start">
-          <span className="text-black text-3xl font-semibold roboto-serif leading-8">
-            Welcome
-          </span>
-          <span className="text-gray-800 text-2xl font-normal roboto-serif leading-8">
-            ,{" "}
-          </span>
-          <span className="text-gray-800 text-xl font-normal roboto-serif leading-8">
-            Admin Dashboard
-          </span>
-        </div>
+        {title === "Dashboard Overview" ? (
+          <div className="justify-start">
+            <span className="text-black text-3xl font-semibold roboto-serif leading-8">
+              Welcome
+            </span>
+            <span className="text-gray-800 text-2xl font-normal roboto-serif leading-8">
+              ,{" "}
+            </span>
+            <span className="text-gray-800 text-xl font-normal roboto-serif leading-8">
+              Admin Dashboard
+            </span>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-1">
+            <h1 className="text-black text-3xl font-semibold roboto-serif leading-8">
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="text-gray-500 text-sm font-normal inter-font">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-3 relative">
         <div 

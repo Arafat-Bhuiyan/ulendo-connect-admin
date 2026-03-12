@@ -1,60 +1,54 @@
 import React from "react";
-import { Users, Truck, Popsicle } from "lucide-react";
-import ChartsSection from "./ChartsSection";
+import { 
+  Users, 
+  Car, 
+  UserCircle, 
+  MapPin, 
+  CheckCircle2, 
+  XCircle, 
+  DollarSign, 
+  Clock, 
+  Star 
+} from "lucide-react";
+import StatCard from "./StatCard";
+import TripAnalytics from "./TripAnalytics";
+import EarningsTrends from "./EarningsTrends";
+import RecentActivity from "./RecentActivity";
+import NewUsers from "./NewUsers";
 
-const cards = [
-  {
-    title: "Total Drivers",
-    number: "24,892",
-    icon: Truck,
-    iconColor: "#FF6363",
-  },
-  {
-    title: "Active Drivers",
-    number: "8,342",
-    icon: Users,
-    iconColor: "#1A9F42",
-  },
-  {
-    title: "Total Customers",
-    number: "$142,384",
-    icon: Users,
-    iconColor: "#FF43F2",
-  },
-  {
-    title: "Live Requests",
-    number: "533",
-    icon: Popsicle,
-    iconColor: "#1B08C0",
-  },
+const stats = [
+  { id: 1, title: "Total Users", value: "12,847", icon: Users, color: "bg-blue-500" },
+  { id: 2, title: "Total Drivers", value: "4,523", icon: Car, color: "bg-green-500" },
+  { id: 3, title: "Total Passengers", value: "8,324", icon: UserCircle, color: "bg-purple-500" },
+  { id: 4, title: "Total Trips", value: "45,678", icon: MapPin, color: "bg-orange-500" },
+  { id: 5, title: "Completed Trips", value: "43,892", icon: CheckCircle2, color: "bg-teal-500" },
+  { id: 6, title: "Cancelled Trips", value: "1,786", icon: XCircle, color: "bg-red-500" },
+  { id: 7, title: "Total Earnings", value: "$1,234,567.89", icon: DollarSign, color: "bg-emerald-500" },
+  { id: 8, title: "Pending Payments", value: "$23,456.50", icon: Clock, color: "bg-yellow-500" },
+  { id: 9, title: "Average Rating", value: "4.7", icon: Star, color: "bg-amber-500" },
 ];
 
 const MainDashboard = () => {
   return (
-    <div className="flex flex-col gap-10 pt-5">
-      {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {cards.map((card, idx) => {
-          const Icon = card.icon;
-          return (
-            <div
-              key={idx}
-              className="bg-[#FAFDFF] border border-[#E1F1FB] p-4 flex items-center justify-between rounded-xl shadow-lg"
-            >
-              <div className="text-[#2B2B2B] flex flex-col gap-2">
-                <h2 className="font-semibold text-sm">{card.title}</h2>
-                <p className="font-bold text-xl">{card.number}</p>
-              </div>
-              <div className="bg-[#EEEEEE] p-3 rounded-lg">
-                <Icon className="w-6 h-6" style={{ color: card.iconColor }} />
-              </div>
-            </div>
-          );
-        })}
+    <div className="flex flex-col gap-8 pb-10">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {stats.map((stat) => (
+          <StatCard key={stat.id} {...stat} />
+        ))}
       </div>
 
-      {/* Additional dashboard content can go here */}
-      <ChartsSection />
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TripAnalytics />
+        <EarningsTrends />
+      </div>
+
+      {/* Lists Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentActivity />
+        <NewUsers />
+      </div>
     </div>
   );
 };
