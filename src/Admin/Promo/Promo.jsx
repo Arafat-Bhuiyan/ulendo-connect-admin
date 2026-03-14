@@ -4,6 +4,7 @@ import {
   Copy, Calendar, Edit, X, Trash2
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import CreatePromoModal from './CreatePromoModal';
 
 const initialPromos = [
   {
@@ -44,6 +45,13 @@ const initialPromos = [
 const Promo = () => {
   const [promos, setPromos] = useState(initialPromos);
   const [activeTab, setActiveTab] = useState('All');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const handleCreatePromo = (newPromo) => {
+    setPromos([newPromo, ...promos]);
+    setIsCreateModalOpen(false);
+    toast.success('Promo code created successfully!', { position: 'top-center' });
+  };
 
   const handleCopyCode = async (code) => {
     try {
@@ -93,6 +101,7 @@ const Promo = () => {
   const avgUsageRate = totalLimit === 0 ? 0 : (totalUsage / totalLimit * 100);
 
   return (
+    <>
       <div className="w-full flex flex-col items-start gap-6">
         
         {/* Header */}
@@ -101,7 +110,10 @@ const Promo = () => {
             <h1 className="text-gray-900 text-xl font-bold leading-7">Promo Code Management</h1>
             <p className="text-gray-600 text-sm font-normal leading-5">Create and manage promotional codes for your ride-share app</p>
           </div>
-          <button className="px-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 transition-colors">
+          <button 
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg flex items-center gap-1.5 transition-colors"
+          >
             <Plus className="w-4 h-4" />
             Create Promo Code
           </button>
@@ -260,6 +272,13 @@ const Promo = () => {
           </table>
         </div>
       </div>
+
+      <CreatePromoModal 
+        isOpen={isCreateModalOpen} 
+        onClose={() => setIsCreateModalOpen(false)} 
+        onCreate={handleCreatePromo}
+      />
+    </>
   );
 };
 
