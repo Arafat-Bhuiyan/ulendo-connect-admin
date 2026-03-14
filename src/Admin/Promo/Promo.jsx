@@ -5,6 +5,8 @@ import {
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import CreatePromoModal from './CreatePromoModal';
+import EditPromoModal from './EditPromoModal';
+import PromoDetailsModal from './PromoDetailsModal';
 
 const initialPromos = [
   {
@@ -46,11 +48,31 @@ const Promo = () => {
   const [promos, setPromos] = useState(initialPromos);
   const [activeTab, setActiveTab] = useState('All');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [promoToEdit, setPromoToEdit] = useState(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [promoToShow, setPromoToShow] = useState(null);
 
   const handleCreatePromo = (newPromo) => {
     setPromos([newPromo, ...promos]);
     setIsCreateModalOpen(false);
     toast.success('Promo code created successfully!', { position: 'top-center' });
+  };
+
+  const handleOpenEditModal = (promo) => {
+    setPromoToEdit(promo);
+    setIsEditModalOpen(true);
+  };
+
+  const handleRowClick = (promo) => {
+    setPromoToShow(promo);
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleUpdatePromo = (updatedPromo) => {
+    setPromos(promos.map(p => p.id === updatedPromo.id ? updatedPromo : p));
+    setIsEditModalOpen(false);
+    toast.success('Promo code updated successfully!', { position: 'top-center' });
   };
 
   const handleCopyCode = async (code) => {
@@ -198,11 +220,11 @@ const Promo = () => {
                 const usagePercent = Math.min(100, Math.round((promo.usageCurrent / promo.usageLimit) * 100));
 
                 return (
-                  <tr key={promo.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={promo.id} onClick={() => handleRowClick(promo)} className="hover:bg-gray-50 transition-colors cursor-pointer">
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
                         <span className="text-blue-600 font-bold font-mono text-sm">{promo.code}</span>
-                        <button onClick={() => handleCopyCode(promo.code)} className="text-gray-400 hover:text-gray-600 transition-colors">
+                        <button onClick={(e) => { e.stopPropagation(); handleCopyCode(promo.code); }} className="text-gray-400 hover:text-gray-600 transition-colors">
                           <Copy className="w-4 h-4" />
                         </button>
                       </div>
@@ -245,15 +267,15 @@ const Promo = () => {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2.5">
-                        <button className="text-blue-600 hover:text-blue-800 transition-colors" title="Edit">
+                        <button onClick={(e) => { e.stopPropagation(); handleOpenEditModal(promo); }} className="text-blue-600 hover:text-blue-800 transition-colors" title="Edit">
                           <Edit className="w-4 h-4" />
                         </button>
                         {promo.status === 'active' && (
-                          <button onClick={() => handleDisable(promo.id)} className="text-orange-500 hover:text-orange-700 transition-colors" title="Disable">
+                          <button onClick={(e) => { e.stopPropagation(); handleDisable(promo.id); }} className="text-orange-500 hover:text-orange-700 transition-colors" title="Disable">
                             <X className="w-4 h-4" />
                           </button>
                         )}
-                        <button onClick={() => handleExpire(promo.id)} className="text-red-500 hover:text-red-700 transition-colors" title="Expire">
+                        <button onClick={(e) => { e.stopPropagation(); handleExpire(promo.id); }} className="text-red-500 hover:text-red-700 transition-colors" title="Expire">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
@@ -277,6 +299,22 @@ const Promo = () => {
         isOpen={isCreateModalOpen} 
         onClose={() => setIsCreateModalOpen(false)} 
         onCreate={handleCreatePromo}
+      />
+
+      <EditPromoModal 
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        initialData={promoToEdit}
+        onUpdate={handleUpdatePromo}
+      />
+
+      <PromoDetailsModal 
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        promo={promoToShow}
+        onExpire={handleExpire}
+        onDisable={handleDisable}
+        onCopy={handleCopyCode}
       />
     </>
   );
