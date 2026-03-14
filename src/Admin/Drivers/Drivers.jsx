@@ -74,10 +74,10 @@ const Drivers = () => {
   return (
     <div className="w-full h-full flex flex-col gap-6 p-2 md:p-6 font-sans">
       {/* Header */}
-      {/* <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5">
         <h1 className="text-gray-900 text-xl font-bold leading-7">Driver Verification</h1>
         <p className="text-gray-600 text-sm font-normal leading-5">Review and approve driver documents</p>
-      </div> */}
+      </div>
 
       {/* Tabs Card */}
       <div className="p-4 bg-white rounded-lg border border-gray-200 flex flex-col items-start overflow-x-auto">

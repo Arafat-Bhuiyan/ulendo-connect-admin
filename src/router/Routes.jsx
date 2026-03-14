@@ -7,6 +7,8 @@ import User from "@/Admin/User/User";
 import UserDetails from "@/Admin/User/UserDetails";
 import Drivers from "@/Admin/Drivers/Drivers";
 
+import Promo from "@/Admin/Promo/Promo";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
       { path: "user-management", element: <User /> },
       { path: "user-management/:id", element: <UserDetails /> },
       { path: "drivers-management", element: <Drivers /> },
-      { path: "promo-codes", element: <>Promo Codes</> },
+      { path: "promo-codes", element: <Promo /> },
       { path: "rates", element: <>Rate & Commission</> },
       { path: "payments", element: <>Payment Management</> },
       { path: "complaints", element: <>Complaints</> },

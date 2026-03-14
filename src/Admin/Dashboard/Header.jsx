@@ -17,40 +17,29 @@ const Header = ({ title, subtitle }) => {
   return (
     <div className="flex items-center justify-between px-6 py-7 bg-[#FBFBFB]">
       <div>
-        {title === "Dashboard Overview" ? (
-          <div className="justify-start">
-            <span className="text-black text-3xl font-semibold roboto-serif leading-8">
-              Welcome
-            </span>
-            <span className="text-gray-800 text-2xl font-normal roboto-serif leading-8">
-              ,{" "}
-            </span>
-            <span className="text-gray-800 text-xl font-normal roboto-serif leading-8">
-              Admin Dashboard
-            </span>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-1">
-            <h1 className="text-black text-3xl font-semibold roboto-serif leading-8">
-              {title}
-            </h1>
-            {subtitle && (
-              <p className="text-gray-500 text-sm font-normal inter-font">
-                {subtitle}
-              </p>
-            )}
-          </div>
-        )}
+        <div className="justify-start">
+          <span className="text-black text-3xl font-semibold roboto-serif leading-8">
+            Welcome
+          </span>
+          <span className="text-gray-800 text-2xl font-normal roboto-serif leading-8">
+            ,{" "}
+          </span>
+          <span className="text-gray-800 text-xl font-normal roboto-serif leading-8">
+            Admin Dashboard
+          </span>
+        </div>
       </div>
       <div className="flex items-center gap-3 relative">
-        <div 
-          className="relative cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors" 
+        <div
+          className="relative cursor-pointer hover:bg-gray-100 p-2 rounded-full transition-colors"
           onClick={toggleNotifications}
         >
           <Bell size={22} strokeWidth={1.5} />
           {!hasOpened && (
             <div className="absolute top-1 right-1 w-4 h-4 bg-red-500 rounded-full outline outline-1 outline-offset-[-0.90px] outline-black/0 flex justify-center items-center overflow-hidden">
-              <span className="text-white text-[9px] font-normal leading-none font-sans">5</span>
+              <span className="text-white text-[9px] font-normal leading-none font-sans">
+                5
+              </span>
             </div>
           )}
         </div>
@@ -69,7 +58,9 @@ const Header = ({ title, subtitle }) => {
           <h1 className="text-neutral-950 text-sm font-semibold roboto-serif leading-tight">
             Admin User
           </h1>
-          <h2 className="text-gray-500 text-[11px] font-normal roboto-serif">admin@rideshare.com</h2>
+          <h2 className="text-gray-500 text-[11px] font-normal roboto-serif">
+            admin@rideshare.com
+          </h2>
         </div>
       </div>
     </div>

@@ -128,6 +128,11 @@ const User = () => {
 
   return (
     <div className="flex flex-col gap-6 pb-10">
+      {/* Header */}
+      <div className="flex flex-col gap-1.5">
+        <h1 className="text-gray-900 text-xl font-bold leading-7">User Management</h1>
+        <p className="text-gray-600 text-sm font-normal leading-5">Manage all registered drivers and passengers</p>
+      </div>
       {/* Search and Filters */}
       <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-2xl">
