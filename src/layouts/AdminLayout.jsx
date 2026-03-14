@@ -14,7 +14,7 @@ export default function AdminLayout() {
     : location.pathname.startsWith(`/admin/user-management`)
     ? "User Management"
     : location.pathname.startsWith(`/admin/drivers-management`)
-    ? "Drivers Management"
+    ? "Driver Verification"
     : location.pathname.startsWith(`/admin/customers-management`)
     ? "Customers Management"
     : location.pathname.startsWith(`/admin/map`)
@@ -30,7 +30,7 @@ export default function AdminLayout() {
     : location.pathname.startsWith(`/admin/user-management`)
     ? "Manage all registered drivers and passengers"
     : location.pathname.startsWith(`/admin/drivers-management`)
-    ? "Manage all ice cream truck drivers"
+    ? "Review and approve driver documents"
     : location.pathname.startsWith(`/admin/customers-management`)
     ? "View and manage all registered customers"
     : location.pathname.startsWith(`/admin/map`)

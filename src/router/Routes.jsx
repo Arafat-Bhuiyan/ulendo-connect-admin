@@ -5,6 +5,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import TermsAndPolicies from "@/Admin/Settings/Settings";
 import User from "@/Admin/User/User";
 import UserDetails from "@/Admin/User/UserDetails";
+import Drivers from "@/Admin/Drivers/Drivers";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       },
       { path: "user-management", element: <User /> },
       { path: "user-management/:id", element: <UserDetails /> },
-      { path: "drivers-management", element: <>Driver Management</> },
+      { path: "drivers-management", element: <Drivers /> },
       { path: "promo-codes", element: <>Promo Codes</> },
       { path: "rates", element: <>Rate & Commission</> },
       { path: "payments", element: <>Payment Management</> },
