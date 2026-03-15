@@ -10,6 +10,7 @@ import Drivers from "@/Admin/Drivers/Drivers";
 import Promo from "@/Admin/Promo/Promo";
 import Rate from "@/Admin/Rate/Rate";
 import Payment from "@/Admin/Payment/Payment";
+import Complaint from "@/Admin/Complaint/Complaint";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       { path: "promo-codes", element: <Promo /> },
       { path: "rates", element: <Rate /> },
       { path: "payments", element: <Payment /> },
-      { path: "complaints", element: <>Complaints</> },
+      { path: "complaints", element: <Complaint /> },
       { path: "settings", element: <TermsAndPolicies /> },
     ],
   },
