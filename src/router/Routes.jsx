@@ -11,6 +11,7 @@ import Promo from "@/Admin/Promo/Promo";
 import Rate from "@/Admin/Rate/Rate";
 import Payment from "@/Admin/Payment/Payment";
 import Complaint from "@/Admin/Complaint/Complaint";
+import Settings from "@/Admin/Settings/Settings";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       { path: "rates", element: <Rate /> },
       { path: "payments", element: <Payment /> },
       { path: "complaints", element: <Complaint /> },
-      { path: "settings", element: <TermsAndPolicies /> },
+      { path: "settings", element: <Settings /> },
     ],
   },
 ]);

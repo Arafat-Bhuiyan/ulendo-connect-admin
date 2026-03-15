@@ -1,265 +1,191 @@
-import {
-  AlignCenter,
-  AlignLeft,
-  AlignRight,
-  Bold,
-  Italic,
-  Underline,
-} from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import General from "./General";
+import React, { useState } from 'react';
+import { Upload, Save } from 'lucide-react';
 
-export default function TermsAndPolicies() {
-  const [activeTab, setActiveTab] = useState("general");
-  const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState({
-    terms: `<ul>
-<li>Lorem ipsum dolor sit amet consectetur. Lacus at venenatis gravida vivamus mauris. Quisque mi est vel dis. Donec rhoncus laoreet odio orci sed risus elit accumsan. Mattis ut est tristique amet vitae at aliquet. Ac vel porttitor egestas scelerisque enim quisque senectus. Euismod ultricies vulputate id cras bibendum sollicitudin proin odio bibendum. Velit velit in scelerisque erat etiam rutrum phasellus nunc. Sed lectus sed a at eget. Nunc purus sed quis at risus. Consectetur nibh justo proin placerat condimentum id at adipiscing.</li>
-<li>Vel blandit mi nulla sodales consectetur. Egestas tristique ultrices gravida duis nisl odio. Posuere curabitur eu platea pellentesque ut. Facilisi elementum neque mauris facilisis in. Cursus condimentum ipsum pretium consequat turpis at porttitor nisl.</li>
-<li>Scelerisque tellus praesent condimentum euismod a faucibus. Auctor at ultricies at urna aliquam massa pellentesque. Vitae vulputate nulla diam placerat m.</li>
-</ul>`,
-    privacy: `<ul>
-<li><strong>Privacy policy</strong> content goes here. This section contains important information about how we handle your data and privacy.</li>
-<li>We are committed to protecting your personal information and respecting your privacy.</li>
-<li>All data is handled in accordance with applicable laws and regulations.</li>
-</ul>`,
+const Settings = () => {
+  const [formData, setFormData] = useState({
+    appName: 'RideShare App',
+    contactEmail: 'support@rideshare.com',
+    supportPhone: '+1-800-RIDESHARE',
+    privacyPolicy: '',
+    termsConditions: '',
   });
 
-  const [editContent, setEditContent] = useState(content[activeTab]);
-  const editorRef = useRef(null);
+  const [notifications, setNotifications] = useState({
+    newDriver: false,
+    newComplaint: false,
+    dailySummary: false,
+  });
 
-  useEffect(() => {
-    setEditContent(content[activeTab]);
-  }, [activeTab, content]);
-
-  useEffect(() => {
-    const el = editorRef.current;
-    if (!el) return;
-    const handlePaste = (e) => {
-      e.preventDefault();
-      const text = e.clipboardData?.getData("text/plain") ?? "";
-      document.execCommand("insertText", false, text);
-    };
-    el.addEventListener("paste", handlePaste);
-    return () => el.removeEventListener("paste", handlePaste);
-  }, [isEditing]);
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-    setIsEditing(false);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSaveEdit = () => {
-    const html = editorRef.current?.innerHTML ?? editContent;
-    setContent((prev) => ({ ...prev, [activeTab]: html }));
-    setIsEditing(false);
-  };
-
-  const handleCancelEdit = () => {
-    setEditContent(content[activeTab]);
-    setIsEditing(false);
-  };
-
-  const [fontSize, setFontSize] = useState("12");
-
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const applyFormat = (command, value) => {
-    if (editorRef.current && isEditing) {
-      document.execCommand(command, false, value);
-      editorRef.current.focus();
-    }
-  };
-
-  const handleFontSizeChange = (e) => {
-    const newSize = e.target.value;
-    setFontSize(newSize);
-    // Apply the new font size to the selected text only
-    applyFontSizeToSelection(newSize);
-  };
-
-  const applyFontSizeToSelection = (size) => {
-    const selection = window.getSelection();
-    const range = selection?.getRangeAt(0);
-    if (range) {
-      const span = document.createElement("span");
-      span.style.fontSize = `${size}px`;
-      range.surroundContents(span);
-    }
+  const handleToggleNotification = (key) => {
+    setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
-    <div className="min-h-screen py-6">
-      <div className="py-8">
-        {/* Tabs */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-8">
-            <button
-              onClick={() => handleTabChange("general")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "general"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              General
-            </button>
-            <button
-              onClick={() => handleTabChange("terms")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "terms"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              Terms & Conditions
-            </button>
-            <button
-              onClick={() => handleTabChange("privacy")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "privacy"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              Privacy Policy
-            </button>
+    <div className="w-full flex-1 mx-auto p-4 md:p-6 flex flex-col gap-6 font-['Inter'] bg-gray-50 min-h-screen">
+      {/* Header Section */}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-gray-900 text-xl font-bold leading-7">Settings</h1>
+        <p className="text-gray-600 text-sm font-normal leading-5">Manage application settings and configurations</p>
+      </div>
+
+      {/* App Configuration */}
+      <div className="bg-white rounded-lg border border-gray-200 p-5 flex flex-col gap-5">
+        <h2 className="text-gray-900 text-base font-semibold leading-6">App Configuration</h2>
+        
+        <div className="flex flex-col gap-5">
+          {/* App Name */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">App Name</label>
+            <input
+              type="text"
+              name="appName"
+              value={formData.appName}
+              onChange={handleInputChange}
+              className="w-full h-9 px-3.5 py-1.5 rounded-lg border border-gray-300 text-neutral-950 text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
           </div>
 
-          {!isEditing && activeTab !== "general" && (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-[#2A98FF] text-white font-semibold rounded hover:bg-[#0b85f7] transition-colors"
-            >
-              Edit
-            </button>
-          )}
-        </div>
-
-        {/* Toolbar */}
-        {isEditing && activeTab !== "general" && (
-          <div className="flex items-center flex-wrap gap-2 mb-4 p-2 border border-gray-300 rounded bg-gray-50">
-            <select
-              value={fontSize}
-              onChange={handleFontSizeChange}
-              className="px-2 py-1 border border-gray-300 rounded text-sm"
-            >
-              <option value="10">10</option>
-              <option value="12">12</option>
-              <option value="14">14</option>
-              <option value="16">16</option>
-              <option value="18">18</option>
-              <option value="20">20</option>
-              <option value="24">24</option>
-            </select>
-
-            <div className="w-px h-6 bg-gray-300" />
-
-            <button
-              onClick={() => applyFormat("bold")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Bold"
-            >
-              <Bold size={16} />
-            </button>
-
-            <button
-              onClick={() => applyFormat("italic")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Italic"
-            >
-              <Italic size={16} />
-            </button>
-
-            <button
-              onClick={() => applyFormat("underline")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Underline"
-            >
-              <Underline size={16} />
-            </button>
-
-            <div className="w-px h-6 bg-gray-300" />
-
-            <button
-              onClick={() => applyFormat("justifyLeft")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Align Left"
-            >
-              <AlignLeft size={16} />
-            </button>
-
-            <button
-              onClick={() => applyFormat("justifyCenter")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Align Center"
-            >
-              <AlignCenter size={16} />
-            </button>
-
-            <button
-              onClick={() => applyFormat("justifyRight")}
-              className="p-1 hover:bg-gray-200 rounded"
-              title="Align Right"
-            >
-              <AlignRight size={16} />
-            </button>
-          </div>
-        )}
-
-        {/* Content */}
-        {activeTab === "general" && <General />}
-
-        {activeTab !== "general" && (
-          <>
-            {isEditing ? (
-              <>
-                <div
-                  ref={editorRef}
-                  contentEditable
-                  suppressContentEditableWarning
-                  className="min-h-[400px] p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 text-gray-800 leading-relaxed"
-                  style={{ fontSize: `${fontSize}px` }}
-                  dangerouslySetInnerHTML={{
-                    __html: (editContent ?? content[activeTab] ?? "").replace(
-                      /\n/g,
-                      "<br>"
-                    ),
-                  }}
-                  onBlur={(e) =>
-                    setEditContent(
-                      e.currentTarget.innerHTML.replace(/<br>/g, "\n")
-                    )
-                  }
-                />
-                <div className="flex gap-3 mt-4">
-                  <button
-                    onClick={handleSaveEdit}
-                    className="px-6 py-2 bg-[#2A98FF] text-white font-semibold rounded hover:bg-[#0b85f7] transition-colors"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={handleCancelEdit}
-                    className="px-6 py-2 bg-gray-200 text-gray-900 font-semibold rounded hover:bg-gray-300 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            ) : (
-              <div className="prose prose-sm max-w-none">
-                <div
-                  className="text-gray-700 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: content[activeTab] }}
-                />
+          {/* App Logo */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">App Logo</label>
+            <div className="flex items-center gap-3.5">
+              <div className="w-16 h-16 bg-gray-100 rounded-lg border border-gray-300 flex items-center justify-center">
+                <span className="text-gray-400 text-xl font-bold">RS</span>
               </div>
-            )}
-          </>
-        )}
+              <button className="flex items-center gap-2 px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-transparent">
+                <Upload size={16} />
+                Upload Logo
+              </button>
+            </div>
+            <p className="text-gray-500 text-xs font-normal">Recommended size: 512×512px, PNG or JPG</p>
+          </div>
+
+          {/* Contact Email */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">Contact Email</label>
+            <input
+              type="email"
+              name="contactEmail"
+              value={formData.contactEmail}
+              onChange={handleInputChange}
+              className="w-full h-9 px-3.5 py-1.5 rounded-lg border border-gray-300 text-neutral-950 text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+
+          {/* Support Phone Number */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">Support Phone Number</label>
+            <input
+              type="text"
+              name="supportPhone"
+              value={formData.supportPhone}
+              onChange={handleInputChange}
+              className="w-full h-9 px-3.5 py-1.5 rounded-lg border border-gray-300 text-neutral-950 text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Legal Documents */}
+      <div className="bg-white rounded-lg border border-gray-200 p-5 flex flex-col gap-5">
+        <h2 className="text-gray-900 text-base font-semibold leading-6">Legal Documents</h2>
+        
+        <div className="flex flex-col gap-5">
+          {/* Privacy Policy */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">Privacy Policy</label>
+            <textarea
+              name="privacyPolicy"
+              value={formData.privacyPolicy}
+              onChange={handleInputChange}
+              className="w-full h-44 p-3.5 rounded-lg border border-gray-300 text-neutral-950 text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+              placeholder="Enter Privacy Policy content here..."
+            />
+          </div>
+
+          {/* Terms and Conditions */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-gray-700 text-xs font-medium leading-4">Terms and Conditions</label>
+            <textarea
+              name="termsConditions"
+              value={formData.termsConditions}
+              onChange={handleInputChange}
+              className="w-full h-44 p-3.5 rounded-lg border border-gray-300 text-neutral-950 text-sm font-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+              placeholder="Enter Terms and Conditions content here..."
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Notification Settings */}
+      <div className="bg-white rounded-lg border border-gray-200 p-5 flex flex-col gap-5">
+        <h2 className="text-gray-900 text-base font-semibold leading-6">Notification Settings</h2>
+        
+        <div className="flex flex-col gap-4">
+          {/* New Driver */}
+          <div className="flex items-start gap-3">
+            <div 
+              onClick={() => handleToggleNotification('newDriver')}
+              className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-colors ${
+                notifications.newDriver ? 'bg-blue-600 border-blue-600' : 'bg-white border-gray-400'
+              }`}
+            >
+              {notifications.newDriver && <div className="w-2 h-2 bg-white rounded-sm" />}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-900 text-xs font-medium leading-4">Email notifications for new driver registrations</span>
+              <span className="text-gray-500 text-[10px] font-medium leading-3">Receive an email when a new driver submits their documents</span>
+            </div>
+          </div>
+
+          {/* New Complaint */}
+          <div className="flex items-start gap-3">
+            <div 
+              onClick={() => handleToggleNotification('newComplaint')}
+              className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-colors ${
+                notifications.newComplaint ? 'bg-blue-600 border-blue-600' : 'bg-white border-gray-400'
+              }`}
+            >
+              {notifications.newComplaint && <div className="w-2 h-2 bg-white rounded-sm" />}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-900 text-xs font-medium leading-4">Email notifications for new complaints</span>
+              <span className="text-gray-500 text-[10px] font-medium leading-3">Receive an email when a user submits a complaint</span>
+            </div>
+          </div>
+
+          {/* Daily Summary */}
+          <div className="flex items-start gap-3">
+            <div 
+              onClick={() => handleToggleNotification('dailySummary')}
+              className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center cursor-pointer transition-colors ${
+                notifications.dailySummary ? 'bg-blue-600 border-blue-600' : 'bg-white border-gray-400'
+              }`}
+            >
+              {notifications.dailySummary && <div className="w-2 h-2 bg-white rounded-sm" />}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-gray-900 text-xs font-medium leading-4">Daily summary reports</span>
+              <span className="text-gray-500 text-[10px] font-medium leading-3">Receive a daily email with platform statistics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Save Button */}
+      <div className="flex justify-end pt-2 pb-6">
+        <button className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-all shadow-sm active:scale-95">
+          <Save size={18} />
+          Save All Settings
+        </button>
       </div>
     </div>
   );
-}
+};
+
+export default Settings;
