@@ -2,11 +2,9 @@ import Login from "@/Admin/Auth/Login";
 import MainDashboard from "@/Admin/Dashboard/MainDashboard";
 import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import TermsAndPolicies from "@/Admin/Settings/Settings";
 import User from "@/Admin/User/User";
 import UserDetails from "@/Admin/User/UserDetails";
 import Drivers from "@/Admin/Drivers/Drivers";
-
 import Promo from "@/Admin/Promo/Promo";
 import Rate from "@/Admin/Rate/Rate";
 import Payment from "@/Admin/Payment/Payment";

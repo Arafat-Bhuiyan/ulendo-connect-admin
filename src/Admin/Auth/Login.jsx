@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/img/logo2.png";
+import logo from "../../assets/img/logo3.png";
 import { LogIn } from "lucide-react";
 
 export default function Login() {
